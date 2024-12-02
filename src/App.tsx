@@ -21,14 +21,14 @@ function App() {
           <div className="bg-white rounded-lg shadow-xl p-6">
 {/*             <h2 className="text-lg font-semibold text-gray-900 mb-4">Unity Game Window</h2> */}
 {/*             <UnityLoader /> */}
-            <div className="mt-4 text-sm text-gray-600">
-              <p>Instructions:</p>
-              <ul className="list-disc list-inside">
-                <li>Place your Unity WebGL build files in the public/Build directory</li>
-                <li>Update the build URLs in UnityContext.tsx</li>
-                <li>The game will automatically load when ready</li>
-              </ul>
-            </div>
+            // <div className="mt-4 text-sm text-gray-600">
+            //   <p>Instructions:</p>
+            //   <ul className="list-disc list-inside">
+            //     <li>Place your Unity WebGL build files in the public/Build directory</li>
+            //     <li>Update the build URLs in UnityContext.tsx</li>
+            //     <li>The game will automatically load when ready</li>
+            //   </ul>
+            // </div>
           </div>
         </main>
       </div>
