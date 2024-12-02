@@ -20,7 +20,7 @@ function App() {
         <main className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
           <div className="bg-white rounded-lg shadow-xl p-6">
 {/*             <h2 className="text-lg font-semibold text-gray-900 mb-4">Unity Game Window</h2> */}
-{/*             <UnityLoader /> */}
+{/*             <UnityLoader /> 
             // <div className="mt-4 text-sm text-gray-600">
             //   <p>Instructions:</p>
             //   <ul className="list-disc list-inside">
@@ -29,6 +29,7 @@ function App() {
             //     <li>The game will automatically load when ready</li>
             //   </ul>
             // </div>
+            */}
           </div>
         </main>
       </div>
