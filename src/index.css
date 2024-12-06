@@ -4,16 +4,17 @@
 
 #overLayWidget{
     position: absolute;
-    padding: 20px;
-    top: 16%;
-    left: 85%;
+    padding: 5px;
+    top: 14%;
+    left: 80%;
+    width:20%;
     background-color: #3434344a;
     border: 3px solid #4df39cba;
     border-radius: 15px;
     z-index: 1;
     color: #4df39c;
     div{
-        padding:10px;
+        padding:3px;
         margin-bottom: 5px;
     }
 }
