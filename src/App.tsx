@@ -13,7 +13,7 @@ function App() {
     },
     [setActiveIndex]
   );
-  let widgetList=[{name:'Widget 1', title:'', type:'line', content:{}},{name:'Widget 2', title:'', type:'', content:{}}];
+  let widgetList=[{name:'Consumption', title:'', type:'line', content:{}},{name:'Energy Generation', title:'', type:'', content:{}}];
 
   function handleClickSpawnEnemies() {
    // sendMessage("GameController", "SpawnEnemies", 100);
@@ -98,12 +98,12 @@ function App() {
     console.log('custom tooltip params:', active, payload, label);
     if (active && payload && payload.length) {
       return (
-        <div className="custom-tooltip" style={{backgroundColor:'#99999999',border:'1px solid #555555', borderRadius:'5px'}}>
-          <p className="label">{` ${payload[0].name}`}</p>
+        <div className="custom-tooltip" style={{backgroundColor:'#333333dd',border:'1px solid #555555', borderRadius:'5px'}}>
+          <p className="label" style={{color:'#ffffff'}}>{` ${payload[0].name}`}</p>
           <div>
             {payload.map((pld) => (
               <div style={{ display: "inline-block", padding: 10 }}>
-                <div style={{ color: pld.fill||'blue' }}>{pld.payload.displayValue}</div>
+                <div style={{ color: pld.fill||'#f0f0f0' }}>{pld.payload.displayValue}</div>
                 {/* <div>{pld.dataKey}</div> */}
               </div>
             ))}
@@ -119,47 +119,35 @@ function App() {
     console.log('e:', e);
     let data = [
       {
-        name: 'Page A',
+        name: '2020',
         uv: 4000,
         pv: 2400,
         amt: 2400,
       },
       {
-        name: 'Page B',
+        name: '2021',
         uv: 3000,
         pv: 1398,
         amt: 2210,
       },
       {
-        name: 'Page C',
+        name: '2022',
         uv: 2000,
         pv: 9800,
         amt: 2290,
       },
       {
-        name: 'Page D',
+        name: '2023',
         uv: 2780,
         pv: 3908,
         amt: 2000,
       },
       {
-        name: 'Page E',
+        name: '2024',
         uv: 1890,
         pv: 4800,
         amt: 2181,
-      },
-      {
-        name: 'Page F',
-        uv: 2390,
-        pv: 3800,
-        amt: 2500,
-      },
-      {
-        name: 'Page G',
-        uv: 3490,
-        pv: 4300,
-        amt: 2100,
-      },
+      }
     ];
     const options=[];
     if(e.type=='line'){
