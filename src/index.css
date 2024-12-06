@@ -1,3 +1,23 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+#overLayWidget{
+    position: absolute;
+    padding: 20px;
+    top: 16%;
+    left: 85%;
+    background-color: #3434344a;
+    border: 3px solid #4df39cba;
+    border-radius: 15px;
+    z-index: 1;
+    color: #4df39c;
+    div{
+        padding:10px;
+        margin-bottom: 5px;
+    }
+}
+
+#react-unity-webgl-canvas-2{
+    /*position:fixed;*/
+}
