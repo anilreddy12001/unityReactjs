@@ -1,16 +1,120 @@
-import React from 'react';
+import React , { useCallback, useState } from 'react';
+
 import { UnityLoader } from './components/UnityLoader';
 import { Gamepad2 } from 'lucide-react';
 import { UnityProvider } from './contexts/UnityContext';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import {PieChart, Pie, Cell,Sector, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import "./index.css";
 function App() {
-  let widgetList=[{name:'Widget 1', title:'', type:'', content:{}},{name:'Widget 2', title:'', type:'', content:{}}];
+  const [activeIndex, setActiveIndex] = useState(0);
+  const onPieEnter = useCallback(
+    (_, index) => {
+      setActiveIndex(index);
+    },
+    [setActiveIndex]
+  );
+  let widgetList=[{name:'Widget 1', title:'', type:'line', content:{}},{name:'Widget 2', title:'', type:'', content:{}}];
 
   function handleClickSpawnEnemies() {
    // sendMessage("GameController", "SpawnEnemies", 100);
    console.log('clicked button..');
   }
+
+  
+  
+  const renderActiveShape = (props:any) => {
+    const RADIAN = Math.PI / 180;
+    const { cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle, fill, payload, percent, value } = props;
+    const sin = Math.sin(-RADIAN * midAngle);
+    const cos = Math.cos(-RADIAN * midAngle);
+    const sx = cx + (outerRadius + 10) * cos;
+    const sy = cy + (outerRadius + 10) * sin;
+    const mx = cx + (outerRadius + 30) * cos;
+    const my = cy + (outerRadius + 30) * sin;
+    const ex = mx + (cos >= 0 ? 1 : -1) * 22;
+    const ey = my;
+    const textAnchor = cos >= 0 ? 'start' : 'end';
+  
+    return (
+      <g>
+        <text x={cx} y={cy} dy={8} textAnchor="middle" fill={fill}>
+          {payload.name}
+        </text>
+        <Sector
+          cx={cx}
+          cy={cy}
+          innerRadius={innerRadius}
+          outerRadius={outerRadius}
+          startAngle={startAngle}
+          endAngle={endAngle}
+          fill={fill}
+        />
+        <Sector
+          cx={cx}
+          cy={cy}
+          startAngle={startAngle}
+          endAngle={endAngle}
+          innerRadius={outerRadius + 6}
+          outerRadius={outerRadius + 10}
+          fill={fill}
+        />
+        <path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke={fill} fill="none" />
+        <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none" />
+        <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} textAnchor={textAnchor} fill="#333">{`PV ${value}`}</text>
+        <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} dy={18} textAnchor={textAnchor} fill="#999">
+          {`(Rate ${(percent * 100).toFixed(2)}%)`}
+        </text>
+      </g>
+    );
+  };
+  const RADIAN = Math.PI / 180;
+  const renderCustomizedLabel = ({
+    cx,
+    cy,
+    midAngle,
+    innerRadius,
+    outerRadius,
+    percent,
+    index
+  }: any) => {
+    const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+    const x = cx + radius * Math.cos(-midAngle * RADIAN);
+    const y = cy + radius * Math.sin(-midAngle * RADIAN);
+  
+    return (
+      <text
+        x={x}
+        y={y}
+        fill="white"
+        textAnchor={x > cx ? "start" : "end"}
+        dominantBaseline="central"
+      >
+        {`${(percent * 100).toFixed(0)}%`}
+      </text>
+    );
+  };
+
+  const CustomTooltip = ({ active, payload, label }) => {
+    console.log('custom tooltip params:', active, payload, label);
+    if (active && payload && payload.length) {
+      return (
+        <div className="custom-tooltip" style={{backgroundColor:'#99999999',border:'1px solid #555555', borderRadius:'5px'}}>
+          <p className="label">{` ${payload[0].name}`}</p>
+          <div>
+            {payload.map((pld) => (
+              <div style={{ display: "inline-block", padding: 10 }}>
+                <div style={{ color: pld.fill||'blue' }}>{pld.payload.displayValue}</div>
+                {/* <div>{pld.dataKey}</div> */}
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+  
+    return null;
+  };
+
   const getChart=(e)=>{
     console.log('e:', e);
     let data = [
@@ -58,6 +162,7 @@ function App() {
       },
     ];
     const options=[];
+    if(e.type=='line'){
     return <ResponsiveContainer width={"100%"} height={200} ><LineChart
    
           data={data}
@@ -78,6 +183,40 @@ function App() {
       
           </LineChart>
       </ResponsiveContainer>
+  }
+      else{
+        const dataPie = [
+          { name: 'Solar', value: 400, label:'Solar', displayValue:'400MW' },
+          { name: 'Grid', value: 300, label:'Grid', displayValue:'300MW' },
+          { name: 'DG', value: 300, label:'Diesel-Generator', displayValue:'300MW' },
+          { name: 'Wind', value: 200, label:'Wind', displayValue:'200MW' },
+        ];
+        let COLORS= ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+        return <ResponsiveContainer width="90%" height={200} ><PieChart>
+        <Pie
+          activeIndex={activeIndex}
+          // activeShape={renderActiveShape}
+          data={dataPie}
+          labelLine={false}
+          cx={80}
+          cy={80}
+          innerRadius={60}
+          outerRadius={80}
+          
+          label={renderCustomizedLabel}
+          fill="#8884d8"
+          dataKey="value"
+          onMouseEnter={onPieEnter}
+        >{data.map((entry, index) => (
+          <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} >
+
+          </Cell>
+        ))}
+        </Pie>
+        <Tooltip content={<CustomTooltip />} cursor={{ fill: "transparent" }} />
+      </PieChart>
+      </ResponsiveContainer>
+      }
   }
 
   return (
