@@ -4,7 +4,11 @@ import { UnityLoader } from './components/UnityLoader';
 import { Gamepad2 } from 'lucide-react';
 import { UnityProvider } from './contexts/UnityContext';
 import {PieChart, Pie, Cell,Sector, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { Select, Button, Input, message } from "antd";
+import keycloak, {logout} from "./components/utils/keycloak.js";
+import Charts from "./components/charts/index.tsx";
 import "./index.css";
+import menuClickAudioFile from "./menu-click.mp3";
 function App() {
   const [activeIndex, setActiveIndex] = useState(0);
   const onPieEnter = useCallback(
@@ -13,6 +17,8 @@ function App() {
     },
     [setActiveIndex]
   );
+  const menuClickAudio = new Audio(menuClickAudioFile);
+  //window.env=import.meta.env;
   let widgetList=[{name:'Consumption', title:'', type:'line', content:{}},{name:'Energy Generation', title:'', type:'', content:{}}];
 
   function handleClickSpawnEnemies() {
@@ -206,10 +212,77 @@ function App() {
       </ResponsiveContainer>
       }
   }
+  const onclickFn=(e)=>{
+    menuClickAudio.play();
+  }
+  if (!localStorage.getItem("loggedInUser") || localStorage.getItem("loggedInUser") == '') {
+    keycloak
+    .init({ onLoad: "login-required" })
+      .then((authenticated) => {
+        console.log('authenticated..', authenticated);
+        if (authenticated) {
+          // console.log(
+          //   "url: ",
+          //   window.location.href,
+          //   "window.config.REACT_APP_PUBLIC_URL:",
+          //   window.config.REACT_APP_PUBLIC_URL
+          // );
+          // console.log("autologout value inside autocon page:",localStorage.getItem("autologout"), "window.config.REACT_APP_PUBLIC_URL",window.config.REACT_APP_PUBLIC_URL);
 
+
+
+          console.log("login success", keycloak);
+          localStorage.setItem("react-token", keycloak.token);
+          localStorage.setItem("react-refresh-token", keycloak.refreshToken);
+          localStorage.setItem("loggedInUser", keycloak.idTokenParsed.name);
+          localStorage.setItem(
+            "loggedInUserName",
+            keycloak.idTokenParsed.preferred_username
+          );
+          localStorage.setItem(
+            "loggedInUserRole",
+            keycloak.realmAccess.roles.toString()
+          );
+          localStorage.setItem(
+            "projectList",
+            keycloak.idTokenParsed.projects.toString()
+          );
+          //root.render(<App/>);
+          var role =
+            localStorage.getItem("loggedInUserRole").indexOf("manager") !== -1
+              ? "manager"
+              : localStorage
+                .getItem("loggedInUserRole")
+                .indexOf("designEngineer") !== -1
+                ? "designEngineer"
+                : localStorage
+                  .getItem("loggedInUserRole")
+                  .indexOf("stressEngineer") !== -1
+                  ? "stressEngineer"
+                  : " ";
+
+          //code to render only if authenticated:
+          if (localStorage.getItem("loggedInUser") && localStorage.getItem("loggedInUser") != '') {
+            return (
+              <></>
+            );
+          }
+
+
+        }
+      }).catch( e=>{
+          console.log('e:',e);
+          //alert('unable to connect to keycloak');
+          message.error('Unable to connect to Keycloak');
+        }
+      )
+  }
+  else{
+console.log("env variables: ",import.meta.env);
+  location.hash='dashboard';
   return (
     <UnityProvider style={{height:'900px'}}>
-      <div id="overLayWidget">{widgetList.map(e=><>{e.name}<div className="widgetWrapper" style={{border:'1px solid #8e8e8e',padding:'5px'}}>{getChart(e)}
+      <div id="overLayWidget" onClick={e=>onclickFn(e)}>{widgetList.map(e=><>{e.name}<div className="widgetWrapper" style={{border:'1px solid #8e8e8e',padding:'5px'}}><Charts progress='.465' name={e.name} type={e.type}/>
       </div></>)}</div>
       {/* <button onClick={handleClickSpawnEnemies}>click</button> */}
       <UnityLoader />
@@ -240,6 +313,7 @@ function App() {
       </div>
     </UnityProvider>
   );
+}
 }
 
 export default App;
