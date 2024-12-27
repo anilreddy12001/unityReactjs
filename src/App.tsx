@@ -127,6 +127,7 @@ function App() {
 
         }
       }).catch( e=>{
+        location.hash='dashboard';
           console.log('e:',e);
           setSpinning(false);
           setLogin(false);
