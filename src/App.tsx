@@ -147,7 +147,7 @@ console.log("else: env variables : ",import.meta.env);
   //return (<>{login?getUnityApp():''}</>)
 }
 }
-console.log('login:', login)
+console.log('loginFlag:', loginFlag)
 return(<><Spin spinning={spinning} size="large" fullscreen />{!loginFlag?getUnityApp():''}</>)
 }
 
