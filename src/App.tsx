@@ -137,7 +137,7 @@ function App() {
           message.error('Unable to connect to Keycloak');
         }
       )
-        */
+      */
   }
   else{
 console.log("else: env variables : ",import.meta.env);
