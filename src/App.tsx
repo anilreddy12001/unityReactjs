@@ -72,7 +72,7 @@ function App() {
   const loginFn=()=>{
   if (!localStorage.getItem("loggedInUser") || localStorage.getItem("loggedInUser") == '') {
     setSpinning(true);
-    
+    /*
     keycloak
     .init({ onLoad: "login-required" })
       .then((authenticated) => {
@@ -137,6 +137,7 @@ function App() {
           message.error('Unable to connect to Keycloak');
         }
       )
+        */
   }
   else{
 console.log("else: env variables : ",import.meta.env);
