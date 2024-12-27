@@ -42,9 +42,9 @@ config = {
     HBLHeaderBGColor: "linear-gradient(to right, #104888 , black)",
     HBLSidebarBGColor: "linear-gradient(to right, #ffffff , white)",
     //linear-gradient(to right, blue, black)
-    VITE_KEYCLOAK_AUTH_URL:"http://192.168.41.132:8080/auth",
-VITE_UI_APP_KEYCLOAK_REALM:"BusinessConsole-dev",
-VITE_UI_APP_KEYCLOAK_CLIENTID:"concession-frontend",
+    VITE_KEYCLOAK_AUTH_URL:"https://euc1.auth.ac/auth",//https://euc1.auth.ac/auth//http://192.168.41.132:8080/auth
+VITE_UI_APP_KEYCLOAK_REALM:"anilmation",//anilmation//BusinessConsole-dev
+VITE_UI_APP_KEYCLOAK_CLIENTID:"anilmation",//anilmation //concession-frontend
     HBLLoginAPI: ip + "/hbl-inventory/api/v1/login",
     HBLWOUploadAPI: ip + "/hbl-inventory/api/v1/upload/work-order",
     HBLProdBOMUploadAPI: ip + "/hbl-inventory/api/v1/upload/production-bom",
