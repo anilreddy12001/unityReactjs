@@ -17,7 +17,8 @@
     "recharts":"latest",
     "keycloak-js": "^20.0.3",
     "@react-keycloak/web":"latest",
-    "antd":"latest"
+    "antd":"latest",
+    "vite-plugin-solid":"latest"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.1",
