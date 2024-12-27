@@ -6,6 +6,7 @@ import { UnityProvider } from './contexts/UnityContext';
 import {PieChart, Pie, Cell,Sector, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { Select, Button, Input, message, Spin } from "antd";
 import keycloak, {logout} from "./components/utils/keycloak.js";
+import { KeycloakProvider, useKeycloak } from '@react-keycloak/web';
 import Charts from "./components/charts/index.tsx";
 import "./index.css";
 import menuClickAudioFile from "./menu-click.mp3";
@@ -13,6 +14,7 @@ function App() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [spinning, setSpinning] = useState(false);
   const [login,setLogin]=useState(false);
+  const { isAuthenticated, isLoading, user, login, logout } = useKeycloak();
   const onPieEnter = useCallback(
     (_, index) => {
       setActiveIndex(index);
