@@ -143,11 +143,11 @@ console.log("else: env variables : ",import.meta.env);
   location.hash='dashboard';
   //setSpinning(false);
   setLogin(true);
-  return (<>{login?getUnityApp():''}</>)
+  //return (<>{login?getUnityApp():''}</>)
 }
 }
 console.log('login:', login)
-return(<><Spin spinning={spinning} size="large" fullscreen />{login?getUnityApp():''}</>)
+return(<><Spin spinning={spinning} size="large" fullscreen />{!login?getUnityApp():''}</>)
 }
 
 export default App;

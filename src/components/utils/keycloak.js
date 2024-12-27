@@ -4,7 +4,8 @@ import React, { useCallback, useState, useEffect } from 'react';
 const keycloak = new Keycloak({
     url:window.config.VITE_KEYCLOAK_AUTH_URL,//  'http://192.168.41.132:8080/auth',//import.meta.env.VITE_KEYCLOAK_AUTH_URL,
     realm: window.config.VITE_UI_APP_KEYCLOAK_REALM,//'BusinessConsole-dev',//import.meta.env.VITE_UI_APP_KEYCLOAK_REALM,
-    clientId: window.config.VITE_UI_APP_KEYCLOAK_CLIENTID//"concession-frontend"//import.meta.env.VITE_UI_APP_KEYCLOAK_CLIENTID
+    clientId: window.config.VITE_UI_APP_KEYCLOAK_CLIENTID,//"concession-frontend"//import.meta.env.VITE_UI_APP_KEYCLOAK_CLIENTID
+
 });
 /*
 {
