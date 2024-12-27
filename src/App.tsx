@@ -13,7 +13,7 @@ import menuClickAudioFile from "./menu-click.mp3";
 function App() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [spinning, setSpinning] = useState(false);
-  const [login,setLogin]=useState(false);
+  const [loginFlag,setLoginFlag]=useState(false);
   const { isAuthenticated, isLoading, user, login, logout } = useKeycloak();
   const onPieEnter = useCallback(
     (_, index) => {
@@ -143,12 +143,12 @@ function App() {
 console.log("else: env variables : ",import.meta.env);
   location.hash='dashboard';
   //setSpinning(false);
-  setLogin(true);
+  setLoginFlag(true);
   //return (<>{login?getUnityApp():''}</>)
 }
 }
 console.log('login:', login)
-return(<><Spin spinning={spinning} size="large" fullscreen />{!login?getUnityApp():''}</>)
+return(<><Spin spinning={spinning} size="large" fullscreen />{!loginFlag?getUnityApp():''}</>)
 }
 
 export default App;
