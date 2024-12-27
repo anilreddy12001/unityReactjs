@@ -14,7 +14,7 @@ function App() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [spinning, setSpinning] = useState(false);
   const [loginFlag,setLoginFlag]=useState(false);
-  const { isAuthenticated, isLoading, user, login, logout } = useKeycloak();
+//  const { isAuthenticated, isLoading, user, login, logout } = useKeycloak();
   const onPieEnter = useCallback(
     (_, index) => {
       setActiveIndex(index);
