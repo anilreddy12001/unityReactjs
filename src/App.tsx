@@ -71,7 +71,7 @@ function App() {
   }
   const loginFn=()=>{
   if (!localStorage.getItem("loggedInUser") || localStorage.getItem("loggedInUser") == '') {
-    setSpinning(true);
+   // setSpinning(true);
     /*
     keycloak
     .init({ onLoad: "login-required" })
@@ -142,7 +142,7 @@ function App() {
   else{
 console.log("else: env variables : ",import.meta.env);
   location.hash='dashboard';
-  //setSpinning(false);
+  setSpinning(false);
   setLoginFlag(true);
   //return (<>{login?getUnityApp():''}</>)
 }
